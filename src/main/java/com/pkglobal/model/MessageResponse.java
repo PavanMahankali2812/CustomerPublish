@@ -9,7 +9,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  */
 @Validated
 @javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen",
-        date = "2020-11-25T12:48:48.427Z")
+        date = "2021-07-02T10:51:52.291Z")
 
 
 

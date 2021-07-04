@@ -11,7 +11,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  */
 @Validated
 @javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen",
-        date = "2020-11-05T04:14:20.333Z")
+        date = "2021-07-02T10:51:52.291Z")
 
 public class Address {
 
