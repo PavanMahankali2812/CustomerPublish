@@ -19,7 +19,7 @@ import com.pkglobal.model.MessageResponse;
 import com.pkglobal.service.CustomerPublishService;
 
 @RestController
-@RequestMapping("/customerPublish/v1")
+@RequestMapping("/customer-publish/v1")
 public class CustomerPublishController {
 
 	private static final Logger logger = LoggerFactory.getLogger(CustomerPublishController.class);
