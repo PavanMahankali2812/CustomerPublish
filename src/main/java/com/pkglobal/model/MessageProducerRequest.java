@@ -4,11 +4,6 @@ import java.util.Objects;
 import javax.validation.Valid;
 import org.springframework.validation.annotation.Validated;
 
-/**
- * MessageRequest
- */
-@Validated
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2021-07-02T13:38:49.919Z")
 
 public class MessageProducerRequest {
 
