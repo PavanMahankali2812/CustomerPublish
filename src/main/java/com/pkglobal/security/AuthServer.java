@@ -7,8 +7,10 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
+import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 
+@EnableAuthorizationServer
 @Configuration
 public class AuthServer extends AuthorizationServerConfigurerAdapter {
 
@@ -18,7 +20,8 @@ public class AuthServer extends AuthorizationServerConfigurerAdapter {
 	@Override
 	public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
 		clients.inMemory().withClient("client").secret(passwordEncoder().encode(("secret")))
-				.authorizedGrantTypes("password").scopes("webclient", "mobileclient");
+				.authorizedGrantTypes("password").scopes("webclient", "mobileclient")
+				.accessTokenValiditySeconds(15 * 60);
 	}
 
 	@Bean
