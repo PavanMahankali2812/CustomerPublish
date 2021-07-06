@@ -11,8 +11,11 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.NoHandlerFoundException;
-import com.prokarma.producer.constants.PublisherConstants;
-import com.prokarma.producer.model.ErrorResponse;
+
+import com.pkglobal.constant.PublisherConstants;
+import com.pkglobal.model.ErrorResponse;
+
+
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
