@@ -27,7 +27,7 @@ import com.pkglobal.util.*;
 
 @Tag("integration")
 @SpringBootTest
-public class CustomerPublishControllerIntegrationTest {
+ class CustomerPublishControllerIntegrationTest {
 	private MockMvc mockMvc;
 	@Autowired
 	private FilterChainProxy springSecurityFilterChain;
@@ -43,7 +43,7 @@ public class CustomerPublishControllerIntegrationTest {
 	}
 
 	@Test
-	public void testAuthorizationWhenPassingValidToken() throws Exception {
+	 void testAuthorizationWhenPassingValidToken() throws Exception {
 		String accessToken = obtainAccessToken("client", "secret");
 		mockMvc.perform(post("/customer-publish/v1/publish-message").contentType(MediaType.APPLICATION_JSON)
 				.header("Activity-Id", "demo").header("Authorization", "Bearer " + accessToken)
@@ -52,7 +52,7 @@ public class CustomerPublishControllerIntegrationTest {
 	}
 
 	@Test
-	public void testAuthorizationWhenPassingInValidToken() throws Exception {
+	 void testAuthorizationWhenPassingInValidToken() throws Exception {
 		String accessToken = obtainAccessToken("client", "secret");
 		mockMvc.perform(post("/customer-publish/v1/publish-message").contentType(MediaType.APPLICATION_JSON)
 				.header("Activity-Id", "demo").header("Authorization", "Bearer " + accessToken + " invalid token")

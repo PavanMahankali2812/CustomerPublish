@@ -2,7 +2,6 @@ package com.pkglobal.model;
 
 import java.util.Objects;
 import javax.validation.Valid;
-import org.springframework.validation.annotation.Validated;
 
 
 public class MessageProducerRequest {

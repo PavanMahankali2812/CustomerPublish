@@ -34,7 +34,7 @@ import com.pkglobal.util.*;
 
 
 @ExtendWith(MockitoExtension.class)
-public class CustomerPublishControllerTest {
+ class CustomerPublishControllerTest {
 	 private static final String RESPONSE_STRING =
 	            "{\"status\":\"success\",\"data\":\"Published Message sucessfully\"}";
 
