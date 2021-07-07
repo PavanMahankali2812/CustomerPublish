@@ -10,7 +10,7 @@
 	<appender name="SPLUNK"
 		class="com.splunk.logging.HttpEventCollectorLogbackAppender">
 		<url>https://prd-p-gd6ty.splunkcloud.com:8088/</url>
-		<token>e0d70fa642df4e187ca4416617aa0bab0555584cbcd3cd0c3cde03fccfd7817f</token>
+		<token>e025f794-ed9b-4336-a77e-4b8b2f47fcad</token>
 		<index>main</index>
 		<disableCertificateValidation>true</disableCertificateValidation>
 		<batch_size_count>1</batch_size_count>
