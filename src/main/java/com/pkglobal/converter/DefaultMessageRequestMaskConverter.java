@@ -11,9 +11,7 @@ public class DefaultMessageRequestMaskConverter implements MaskConverter<Message
 	@Override
 	public MessageRequest convert(MessageRequest messageRequest) {
 
-		System.out.println(messageRequest.getBirthDate().replaceAll(
-				(PublisherRegexConstants.BIRTH_DATE_REGEX_EXPRESSION.getRegexExpression()),
-				PublisherRegexConstants.MASK_CONSTANTS.getRegexExpression()));
+		
 
 		messageRequest.setCustomerNumber(messageRequest.getCustomerNumber().replaceAll(
 				(PublisherRegexConstants.CUSTOMER_NUMBER_REGEX_EXPRESSION.getRegexExpression()),
