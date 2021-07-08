@@ -24,7 +24,7 @@ public class MessageRequest {
 
 	@JsonProperty("customerNumber")
 	@NotEmpty(message = "CustomerNumber should not be empty.")
-	@Pattern(regexp = "[A-Z0-9]{1,50}$", message = "The field customerNumber must be a string with maximum length of 50.")
+	@Pattern(regexp = "^[C0-9]*$", message = "The field customerNumber must be a string with maximum length of 50.")
 	private String customerNumber = null;
 
 	@JsonProperty("firstName")
@@ -58,8 +58,7 @@ public class MessageRequest {
 	private String mobileNumber = null;
 
 	@JsonProperty("email")
-	@Email(message = "Email should be valid")
-	@NotEmpty(message = "email should not be empty.")
+	@NotEmpty(message = "Email field is required")
 	@Email(message = "Email field is required")
 	@Length(max = 50, message = "The field email must be a string with maximum length of 50.")
 	private String email = null;
