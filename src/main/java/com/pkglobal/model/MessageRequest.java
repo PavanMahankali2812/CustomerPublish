@@ -40,7 +40,7 @@ public class MessageRequest {
 	@JsonProperty("birthDate")
 	@JsonFormat(pattern = "dd-MM-yyyy")
 	@NotEmpty(message = "birthDate should not be empty.")
-	@Pattern(regexp = "[0-9]{2}-0[1-9]|1[012]-[0-9]{4}", message = "The field birthdate should be in dd-mm-yyyy format")
+	@Pattern(regexp = "[0-9]{2}-[0-9]{2}-[0-9]{4}", message = "The field birthdate should be in dd-mm-yyyy format")
 	private String birthDate = null;
 
 	@JsonProperty("country")
