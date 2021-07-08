@@ -70,12 +70,10 @@ public class MessageRequest {
 	private String email = null;
 
 	@JsonProperty("customerStatus")
-	@NotEmpty
 	@Valid
 	private CustomerStatusEnum customerStatus = null;
 
 	@JsonProperty("address")
-	@NotEmpty
 	@Valid
 	private Address address = null;
 
