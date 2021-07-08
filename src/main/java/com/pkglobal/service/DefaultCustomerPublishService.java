@@ -4,12 +4,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
 import com.pkglobal.converter.DefaultMessageRequestConverter;
 import com.pkglobal.converter.DefaultMessageRequestMaskConverter;
-import com.pkglobal.exceptions.ApplicationRuntimeException;
+import com.pkglobal.exceptions.CustomerPublishServiceException;
 import com.pkglobal.model.MessageProducerRequest;
 import com.pkglobal.model.MessageRequest;
 import com.pkglobal.model.MessageResponse;
@@ -42,7 +43,8 @@ public class DefaultCustomerPublishService implements CustomerPublishService {
 			kafkaTemplate.send(kafkaTopic, messageProducerRequest);
 			logger.info("End to Publish message and message is {}", messageRequest);
 		} catch (Exception ex) {
-			throw new ApplicationRuntimeException("Error in publishing data");
+			throw new CustomerPublishServiceException(String.valueOf(HttpStatus.INTERNAL_SERVER_ERROR.value()),
+					ex.getMessage());
 		}
 		return buildMessageResponse();
 
