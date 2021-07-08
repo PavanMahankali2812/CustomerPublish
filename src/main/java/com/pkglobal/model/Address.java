@@ -20,7 +20,8 @@ public class Address {
 
 	@JsonProperty("addressLine1")
 	@NotEmpty(message = "addressLine1 should not be empty.")
-	@Pattern(regexp = "[A-Za-z][a-zA-z\\d]{1,50}$", message = "The field addressLine1 must be a string with maximum length of 50.")
+	@Pattern(regexp = "[A-Za-z][a-zA-z\\d]{1,50}$",
+    message = "The field addressLine1 must be a string with maximum length of 50.")
 	private String addressLine1 = null;
 
 	@JsonProperty("addressLine2 ")
@@ -31,7 +32,8 @@ public class Address {
 
 	@JsonProperty("postalCode")
 	@NotEmpty(message = "postalCode should not be empty.")
-	@Pattern(regexp = "^\\d{5}$", message = "The field postalCode must be a string with maximum length of 5.")
+	@Pattern(regexp = "^\\d{5}$",
+    message = "The field postalCode must be a string with maximum length of 5.")
 	private String postalCode = null;
 
 	public Address addressLine1(String addressLine1) {
