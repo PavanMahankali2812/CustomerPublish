@@ -60,8 +60,7 @@ public class GlobalExceptionHandler {
 	}
 
 	@ExceptionHandler({ ResourceAccessException.class, CustomerPublishServiceException.class })
-	public final ResponseEntity<ErrorResponse> handleException(CustomerPublishServiceException ex,
-			HttpServletRequest request) {
+	public final ResponseEntity<ErrorResponse> handleException(Exception ex, HttpServletRequest request) {
 		ErrorResponse errorResponse = new ErrorResponse();
 		errorResponse.setStatus(PublisherConstants.ERROR.getValue());
 		errorResponse.setMessage(ex.getMessage());
