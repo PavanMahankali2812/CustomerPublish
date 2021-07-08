@@ -54,7 +54,7 @@ public class MessageRequest {
 
 	@JsonProperty("mobileNumber")
 	@NotEmpty(message = "mobileNumber should not be empty.")
-	@Pattern(regexp = "[0-9]{1,10}$", message = "The field mobileNumber must be a string with maximum length of 10.")
+	@Pattern(regexp = "^\\d{10}$", message = "The field mobileNumber must be a string with maximum length of 10.")
 	private String mobileNumber = null;
 
 	@JsonProperty("email")
