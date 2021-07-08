@@ -10,6 +10,8 @@ import org.springframework.security.oauth2.config.annotation.configurers.ClientD
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
+import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
+import org.springframework.security.oauth2.provider.approval.UserApprovalHandler;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.InMemoryTokenStore;
 
@@ -17,41 +19,52 @@ import org.springframework.security.oauth2.provider.token.store.InMemoryTokenSto
 @EnableAuthorizationServer
 public class AuthorizationServerConfiguration extends AuthorizationServerConfigurerAdapter {
 
-    public static final String CLIENT = "client";
-    public static final String CLIENT_PASSWORD = "password";
-    public static final String PASSWORD_GRANT_TYPE = "password";
-    public static final String AUTH_CODE_GRANT_TYPE = "authorization_code";
-    public static final String REFRESH_TOKEN_GRANT_TYPE = "refresh_token";
-    public static final String IMPLICIT_GRANT_TYPE = "implicit";
-    public static final String READ_SCOPE = "read";
-    public static final String WRITE_SCOPE = "write";
+	public static final String CLIENT = "client";
+	public static final String CLIENT_PASSWORD = "password";
+	public static final String PASSWORD_GRANT_TYPE = "password";
+	public static final String AUTH_CODE_GRANT_TYPE = "authorization_code";
+	public static final String REFRESH_TOKEN_GRANT_TYPE = "refresh_token";
+	public static final String IMPLICIT_GRANT_TYPE = "implicit";
+	public static final String READ_SCOPE = "read";
+	public static final String WRITE_SCOPE = "write";
 
-    @Autowired
-    @Qualifier("authenticationManagerBean")
-    private AuthenticationManager authenticationManager;
+	@Autowired
+	@Qualifier("authenticationManagerBean")
+	private AuthenticationManager authenticationManager;
 
-    @Autowired
-    private TokenStore tokenStore;
+	@Autowired
+	private TokenStore tokenStore;
 
-    @Override
-    public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
+	@Autowired
+	private UserApprovalHandler userApprovalHandler;
 
-        clients.inMemory().withClient(CLIENT)
-                .authorizedGrantTypes(PASSWORD_GRANT_TYPE, AUTH_CODE_GRANT_TYPE,
-                        REFRESH_TOKEN_GRANT_TYPE, IMPLICIT_GRANT_TYPE)
-                .authorities("ROLE_CLIENT", "ROLE_TRUSTED_CLIENT", "USER")
-                .scopes(READ_SCOPE, WRITE_SCOPE).autoApprove(true).secret(PasswordEncoderFactories
-                        .createDelegatingPasswordEncoder().encode(CLIENT_PASSWORD))
-                .accessTokenValiditySeconds(15 * 60);
-    }
+	private static String REALM = "MY_OAUTH_REALM";
 
-    @Override
-    public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
-        endpoints.authenticationManager(authenticationManager).tokenStore(tokenStore);
-    }
+	@Override
+	public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
 
-    @Bean
-    public TokenStore tokenStore() {
-        return new InMemoryTokenStore();
-    }
+		clients.inMemory().withClient(CLIENT)
+				.authorizedGrantTypes(PASSWORD_GRANT_TYPE, AUTH_CODE_GRANT_TYPE, REFRESH_TOKEN_GRANT_TYPE,
+						IMPLICIT_GRANT_TYPE)
+				.authorities("ROLE_CLIENT", "ROLE_TRUSTED_CLIENT", "USER").scopes(READ_SCOPE, WRITE_SCOPE)
+				.autoApprove(true)
+				.secret(PasswordEncoderFactories.createDelegatingPasswordEncoder().encode(CLIENT_PASSWORD))
+				.accessTokenValiditySeconds(15 * 60);
+	}
+
+	@Override
+	public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
+		endpoints.authenticationManager(authenticationManager).tokenStore(tokenStore)
+				.userApprovalHandler(userApprovalHandler);
+	}
+
+	@Bean
+	public TokenStore tokenStore() {
+		return new InMemoryTokenStore();
+	}
+
+	@Override
+	public void configure(AuthorizationServerSecurityConfigurer oauthServer) throws Exception {
+		oauthServer.realm(REALM + "/client");
+	}
 }
