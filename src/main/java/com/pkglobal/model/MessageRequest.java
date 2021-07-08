@@ -23,19 +23,16 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class MessageRequest {
 
 	@JsonProperty("customerNumber")
-	@Size(max = 10, message = "Customer number size should not be greater than 10.")
 	@NotEmpty(message = "CustomerNumber should not be empty.")
 	@Pattern(regexp = "[A-Z0-9]{1,50}$", message = "The field customerNumber must be a string with maximum length of 50.")
 	private String customerNumber = null;
 
 	@JsonProperty("firstName")
-	@Size(min = 10, max = 50, message = "Size of first name  is in between 10 to 50.")
 	@NotEmpty(message = "firstName should not be empty.")
 	@Pattern(regexp = "[\\w\\W]{10,50}$", message = "The field firstName must be a string with minimum length of 10 and maximum length of 50.")
 	private String firstName = null;
 
 	@JsonProperty("lastName")
-	@Size(min = 10, max = 50, message = "Size of last name is in between 10 to 50")
 	@NotEmpty(message = "lastName should not be empty.")
 	@Pattern(regexp = "[\\w\\W]{10,50}$", message = "The field lastName must be a string with minimum length of 10 and maximum length of 50.")
 	private String lastName = null;
@@ -51,13 +48,11 @@ public class MessageRequest {
 	private String country = null;
 
 	@JsonProperty("countryCode")
-	@Size(max = 2, message = "Size of Country code is in between 0 to 2")
 	@NotEmpty(message = "countryCode should not be empty.")
 	@Pattern(regexp = "[A-Z]{1,2}$", message = "The field countryCode must be a string with maximum length of 2.")
 	private String countryCode = null;
 
 	@JsonProperty("mobileNumber")
-	@Size(max = 10)
 	@NotEmpty(message = "mobileNumber should not be empty.")
 	@Pattern(regexp = "[0-9]{1,10}$", message = "The field mobileNumber must be a string with maximum length of 10.")
 	private String mobileNumber = null;
