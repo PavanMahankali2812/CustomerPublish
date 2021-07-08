@@ -14,6 +14,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingRequestHeaderException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.servlet.NoHandlerFoundException;
 
 import com.pkglobal.constant.PublisherConstants;
@@ -58,7 +59,7 @@ public class GlobalExceptionHandler {
 		return new ResponseEntity<>(errorResponse, HttpStatus.UNAUTHORIZED);
 	}
 
-	@ExceptionHandler(CustomerPublishServiceException.class)
+	@ExceptionHandler({ ResourceAccessException.class, CustomerPublishServiceException.class })
 	public final ResponseEntity<ErrorResponse> handleException(CustomerPublishServiceException ex,
 			HttpServletRequest request) {
 		ErrorResponse errorResponse = new ErrorResponse();
