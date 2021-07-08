@@ -20,8 +20,8 @@ public class AuthServer extends AuthorizationServerConfigurerAdapter {
 	@Override
 	public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
 		clients.inMemory().withClient("client").secret(passwordEncoder().encode(("secret")))
-				.authorizedGrantTypes("password").scopes("webclient", "mobileclient")
-				
+				.authorizedGrantTypes("password").scopes("webclient", "mobileclient");
+
 	}
 
 	@Bean
