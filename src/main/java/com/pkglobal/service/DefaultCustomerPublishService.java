@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.pkglobal.converter.DefaultMessageRequestConverter;
 import com.pkglobal.converter.DefaultMessageRequestMaskConverter;
-import com.pkglobal.exceptions.CustomerPublishServiceException;
+import com.pkglobal.exceptions.ApplicationRuntimeException;
 import com.pkglobal.model.MessageProducerRequest;
 import com.pkglobal.model.MessageRequest;
 import com.pkglobal.model.MessageResponse;
@@ -43,7 +43,7 @@ public class DefaultCustomerPublishService implements CustomerPublishService {
 			kafkaTemplate.send(kafkaTopic, messageProducerRequest);
 			logger.info("End to Publish message and message is {}", messageRequest);
 		} catch (Exception ex) {
-			throw new CustomerPublishServiceException(String.valueOf(HttpStatus.INTERNAL_SERVER_ERROR.value()),
+			throw new ApplicationRuntimeException(String.valueOf(HttpStatus.INTERNAL_SERVER_ERROR.value()),
 					ex.getMessage());
 		}
 		return buildMessageResponse();
