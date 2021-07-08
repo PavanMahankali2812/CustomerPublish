@@ -4,6 +4,7 @@ import org.springframework.stereotype.Component;
 
 import com.pkglobal.constant.PublisherRegexConstants;
 import com.pkglobal.model.MessageRequest;
+import com.pkglobal.converter.MaskConverter;
 
 @Component
 public class DefaultMessageRequestMaskConverter implements MaskConverter<MessageRequest> {

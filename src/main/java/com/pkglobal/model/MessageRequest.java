@@ -24,7 +24,7 @@ public class MessageRequest {
 
 	@JsonProperty("customerNumber")
 	@NotEmpty(message = "CustomerNumber should not be empty.")
-	@Pattern(regexp = "^[C][0-9]*$", message = "The field customerNumber must be a string with maximum length of 10.")
+	@Pattern(regexp = "^[C][0-9]*$", message = "The field customerNumber must Starts with 'C' with maximum length of 10.")
 	private String customerNumber = null;
 
 	@JsonProperty("firstName")
