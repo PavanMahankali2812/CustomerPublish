@@ -20,7 +20,7 @@ public class AuthServer extends AuthorizationServerConfigurerAdapter {
 	@Override
 	public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
 		clients.inMemory().withClient("client").secret(passwordEncoder().encode(("secret")))
-				.authorizedGrantTypes("password").scopes("read", "write").autoApprove(true)
+				.authorizedGrantTypes("password").scopes("webclient", "mobileclient").autoApprove(true)
 				.accessTokenValiditySeconds(15 * 60);
 	}
 
