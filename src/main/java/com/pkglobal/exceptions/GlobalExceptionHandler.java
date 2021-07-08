@@ -59,7 +59,7 @@ public class GlobalExceptionHandler {
 		return new ResponseEntity<>(errorResponse, HttpStatus.UNAUTHORIZED);
 	}
 
-	@ExceptionHandler({ ResourceAccessException.class, CustomerPublishServiceException.class })
+	@ExceptionHandler({ ResourceAccessException.class, ApplicationRuntimeException.class })
 	public final ResponseEntity<ErrorResponse> handleException(Exception ex, HttpServletRequest request) {
 		ErrorResponse errorResponse = new ErrorResponse();
 		errorResponse.setStatus(PublisherConstants.ERROR.getValue());
