@@ -86,7 +86,6 @@ public class GlobalExceptionHandler implements AuthenticationEntryPoint {
 	}
 
 	@Override
-	@ExceptionHandler(value = { Exception.class })
 	public void commence(HttpServletRequest request, HttpServletResponse response,
 			AuthenticationException authException) throws IOException, ServletException {
 		ErrorResponse errorResponse = new ErrorResponse();
