@@ -24,7 +24,7 @@ public class DefaultMessageRequestConverter implements ProducerConverter<Message
 		messageProducerRequest.setCustomerNumber(messageRequest.getCustomerNumber());
 		messageProducerRequest.setCustomerStatus(messageRequest.getCustomerStatus());
 		messageProducerRequest.setEmail(messageRequest.getEmail());
-		messageProducerRequest.setFirstName(messageRequest.getEmail());
+		messageProducerRequest.setFirstName(messageRequest.getFirstName());
 		messageProducerRequest.setLastName(messageRequest.getLastName());
 		messageProducerRequest.setMobileNumber(messageRequest.getMobileNumber());
 		return messageProducerRequest;
