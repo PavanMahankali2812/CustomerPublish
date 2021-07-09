@@ -15,6 +15,7 @@ import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.oauth2.common.exceptions.UnauthorizedClientException;
 import org.springframework.security.web.AuthenticationEntryPoint;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingRequestHeaderException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -73,7 +74,8 @@ public class GlobalExceptionHandler implements AuthenticationEntryPoint {
 		return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 
-	@ExceptionHandler({ HttpMessageNotReadableException.class, MissingRequestHeaderException.class })
+	@ExceptionHandler({ HttpMessageNotReadableException.class, MissingRequestHeaderException.class,
+			HttpRequestMethodNotSupportedException.class, })
 	public final ResponseEntity<ErrorResponse> requestValidationException(Exception ex, HttpServletRequest request) {
 		ErrorResponse errorResponse = new ErrorResponse();
 		errorResponse.setStatus(PublisherConstants.ERROR.getValue());
@@ -86,8 +88,8 @@ public class GlobalExceptionHandler implements AuthenticationEntryPoint {
 	@Override
 	public void commence(HttpServletRequest request, HttpServletResponse response,
 			AuthenticationException authException) throws IOException, ServletException {
-		response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Authentication Failed");
 
+		response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Authentication Failed");
 	}
 
 }

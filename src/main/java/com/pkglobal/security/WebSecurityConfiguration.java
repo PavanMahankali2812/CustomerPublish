@@ -12,34 +12,38 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 
+import com.pkglobal.exceptions.GlobalExceptionHandler;
+
 @EnableWebSecurity
 @Configuration
 public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-    public static final String USER_NAME = "user";
-    public static final String USER_PASSWORD = "secret";
+	public static final String USER_NAME = "user";
+	public static final String USER_PASSWORD = "secret";
 
-    @Bean
-    @Override
-    public AuthenticationManager authenticationManagerBean() throws Exception {
-        return super.authenticationManagerBean();
-    }
+	@Bean
+	@Override
+	public AuthenticationManager authenticationManagerBean() throws Exception {
+		return super.authenticationManagerBean();
+	}
 
-    @Bean
-    @Override
-    public UserDetailsService userDetailsService() {
+	@Bean
+	@Override
+	public UserDetailsService userDetailsService() {
 
-        UserDetails user = User
-                .builder().username(USER_NAME).password(PasswordEncoderFactories
-                        .createDelegatingPasswordEncoder().encode(USER_PASSWORD))
-                .roles("USER").build();
+		UserDetails user = User.builder().username(USER_NAME)
+				.password(PasswordEncoderFactories.createDelegatingPasswordEncoder().encode(USER_PASSWORD))
+				.roles("USER").build();
 
-        return new InMemoryUserDetailsManager(user);
-    }
+		return new InMemoryUserDetailsManager(user);
+	}
 
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
+	@Override
+	protected void configure(HttpSecurity http) throws Exception {
 
-        http.csrf().disable().authorizeRequests().antMatchers("/oauth/*").permitAll();
-    }
+		http.csrf().disable().authorizeRequests().antMatchers("/oauth/*").permitAll().and().exceptionHandling()
+				.authenticationEntryPoint(new GlobalExceptionHandler());
+
+	}
+
 }
