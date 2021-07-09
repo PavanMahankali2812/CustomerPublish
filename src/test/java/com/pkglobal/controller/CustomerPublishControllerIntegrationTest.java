@@ -4,6 +4,7 @@ import static org.springframework.security.test.web.servlet.request.SecurityMock
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -23,11 +24,11 @@ import org.springframework.web.context.WebApplicationContext;
 import com.pkglobal.model.Address;
 import com.pkglobal.model.CustomerStatusEnum;
 import com.pkglobal.model.MessageRequest;
-import com.pkglobal.util.*;
+import com.pkglobal.util.ObjectMapperUtil;
 
 @Tag("integration")
 @SpringBootTest
- class CustomerPublishControllerIntegrationTest {
+class CustomerPublishControllerIntegrationTest {
 	private MockMvc mockMvc;
 	@Autowired
 	private FilterChainProxy springSecurityFilterChain;
@@ -43,7 +44,7 @@ import com.pkglobal.util.*;
 	}
 
 	@Test
-	 void testAuthorizationWhenPassingValidToken() throws Exception {
+	void testAuthorizationWhenPassingValidToken() throws Exception {
 		String accessToken = obtainAccessToken("client", "secret");
 		mockMvc.perform(post("/customer-publish/v1/publish-message").contentType(MediaType.APPLICATION_JSON)
 				.header("Activity-Id", "demo").header("Authorization", "Bearer " + accessToken)
@@ -52,7 +53,7 @@ import com.pkglobal.util.*;
 	}
 
 	@Test
-	 void testAuthorizationWhenPassingInValidToken() throws Exception {
+	void testAuthorizationWhenPassingInValidToken() throws Exception {
 		String accessToken = obtainAccessToken("client", "secret");
 		mockMvc.perform(post("/customer-publish/v1/publish-message").contentType(MediaType.APPLICATION_JSON)
 				.header("Activity-Id", "demo").header("Authorization", "Bearer " + accessToken + " invalid token")
@@ -76,20 +77,20 @@ import com.pkglobal.util.*;
 
 	private MessageRequest buildCustomerRequest() {
 		MessageRequest customerRequest = new MessageRequest();
-		customerRequest.setCustomerNumber("UBC2312");
-		customerRequest.setFirstName("unnnnnitesting");
-		customerRequest.setLastName("demoeeeexample");
-		customerRequest.setEmail("abcdefghi@gmail.com");
+		customerRequest.setCustomerNumber("C123456789");
+		customerRequest.setFirstName("testing");
+		customerRequest.setLastName("example");
+		customerRequest.setEmail("pavan@gmail.com");
 		customerRequest.setCustomerStatus(CustomerStatusEnum.OPEN);
 		customerRequest.setCountry("india");
 		customerRequest.setBirthDate("12-02-2020");
 		customerRequest.setCountryCode("IN");
 		customerRequest.mobileNumber("9999999999");
 		Address customerAddress = new Address();
-		customerAddress.setAddressLine1("Demoline1");
-		customerAddress.setAddressLine2("Demo AddressLine2");
+		customerAddress.setAddressLine1("Demo");
+		customerAddress.setAddressLine2("ddressLine2");
 		customerAddress.setStreet("James Street");
-		customerAddress.setPostalCode("50049");
+		customerAddress.setPostalCode("534451");
 		customerRequest.setAddress(customerAddress);
 		return customerRequest;
 	}
