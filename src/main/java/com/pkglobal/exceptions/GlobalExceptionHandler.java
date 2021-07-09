@@ -7,6 +7,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.codehaus.jackson.map.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -25,7 +26,6 @@ import org.springframework.web.servlet.NoHandlerFoundException;
 
 import com.pkglobal.constant.PublisherConstants;
 import com.pkglobal.model.ErrorResponse;
-import com.pkglobal.util.ObjectMapperUtil;
 
 @ControllerAdvice
 public class GlobalExceptionHandler implements AuthenticationEntryPoint {
@@ -95,13 +95,8 @@ public class GlobalExceptionHandler implements AuthenticationEntryPoint {
 		errorResponse.setMessage(authException.getLocalizedMessage());
 		errorResponse.setErrorType(authException.getClass().getSimpleName());
 		logger.error("ErrorResponse : {}", errorResponse);
-		String errorMeassage = null;
-		try {
-			errorMeassage = ObjectMapperUtil.returnJsonFromObject(errorResponse);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		response.getWriter().write(errorMeassage);
+		final ObjectMapper mapper = new ObjectMapper();
+		mapper.writeValue(response.getOutputStream(), errorResponse);
 	}
 
 }
