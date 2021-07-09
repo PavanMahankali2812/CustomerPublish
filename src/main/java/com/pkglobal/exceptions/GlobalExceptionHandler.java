@@ -1,12 +1,15 @@
 package com.pkglobal.exceptions;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.codehaus.jackson.map.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -88,13 +91,14 @@ public class GlobalExceptionHandler implements AuthenticationEntryPoint {
 	@Override
 	public void commence(HttpServletRequest request, HttpServletResponse response,
 			AuthenticationException authException) throws IOException, ServletException {
-		ErrorResponse errorResponse = new ErrorResponse();
-		errorResponse.setStatus(PublisherConstants.ERROR.getValue());
-		errorResponse.setMessage(authException.getLocalizedMessage());
-		errorResponse.setErrorType(authException.getClass().getSimpleName());
-		logger.error("ErrorResponse : {}", errorResponse);
-		unauthorizedHandler(authException, request);
-
+		response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+		final Map<String, Object> body = new HashMap<>();
+		body.put("Status", PublisherConstants.ERROR.getValue());
+		body.put("Message", authException.getLocalizedMessage());
+		body.put("ErrorType", authException.getClass().getSimpleName());
+		final ObjectMapper mapper = new ObjectMapper();
+		logger.error("ErrorResponse : {}", body);
+		mapper.writeValue(response.getOutputStream(), body);
 	}
 
 }
