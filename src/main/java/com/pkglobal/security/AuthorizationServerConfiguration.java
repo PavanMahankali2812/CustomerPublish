@@ -16,7 +16,7 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
 
 	public static final String CLIENT = "client";
 	public static final String CLIENT_PASSWORD = "password";
-	public static final String PASSWORD_GRANT_TYPE = "password";
+	public static final String PASSWORD_GRANT_TYPE = "client_credentials";
 	public static final String REFRESH_TOKEN_GRANT_TYPE = "refresh_token";
 
 	@Autowired
@@ -30,7 +30,7 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
 	public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
 
 		clients.inMemory().withClient(CLIENT).authorizedGrantTypes(PASSWORD_GRANT_TYPE, REFRESH_TOKEN_GRANT_TYPE)
-				.secret(passwordEncoder.encode(CLIENT_PASSWORD)).accessTokenValiditySeconds(15 * 60);
+				.secret(passwordEncoder.encode(CLIENT_PASSWORD)).accessTokenValiditySeconds(15 * 60).scopes("all");
 	}
 
 	@Override
