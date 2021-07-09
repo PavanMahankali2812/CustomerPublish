@@ -20,6 +20,11 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
 	public static final String CLIENT = "client";
 	public static final String CLIENT_PASSWORD = "password";
 	public static final String PASSWORD_GRANT_TYPE = "password";
+	public static final String AUTH_CODE_GRANT_TYPE = "authorization_code";
+	public static final String REFRESH_TOKEN_GRANT_TYPE = "refresh_token";
+	public static final String IMPLICIT_GRANT_TYPE = "implicit";
+	public static final String READ_SCOPE = "read";
+	public static final String WRITE_SCOPE = "write";
 
 	@Autowired
 	@Qualifier("authenticationManagerBean")
@@ -31,8 +36,11 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
 	@Override
 	public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
 
-		clients.inMemory().withClient(CLIENT).authorizedGrantTypes(PASSWORD_GRANT_TYPE)
-				.authorities("ROLE_CLIENT", "ROLE_TRUSTED_CLIENT", "USER").scopes("all").autoApprove(true)
+		clients.inMemory().withClient(CLIENT)
+				.authorizedGrantTypes(PASSWORD_GRANT_TYPE, AUTH_CODE_GRANT_TYPE, REFRESH_TOKEN_GRANT_TYPE,
+						IMPLICIT_GRANT_TYPE)
+				.authorities("ROLE_CLIENT", "ROLE_TRUSTED_CLIENT", "USER").scopes(READ_SCOPE, WRITE_SCOPE)
+				.autoApprove(true)
 				.secret(PasswordEncoderFactories.createDelegatingPasswordEncoder().encode(CLIENT_PASSWORD))
 				.accessTokenValiditySeconds(15 * 60);
 	}
