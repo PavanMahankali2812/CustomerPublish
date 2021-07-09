@@ -12,6 +12,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 
+import com.pkglobal.exceptions.GlobalExceptionHandler;
+
 @EnableWebSecurity
 @Configuration
 public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
@@ -39,7 +41,8 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 
-		http.csrf().disable().authorizeRequests().antMatchers("/oauth/*").permitAll();
+		http.csrf().disable().authorizeRequests().antMatchers("/oauth/*").permitAll().and().exceptionHandling()
+				.authenticationEntryPoint(new GlobalExceptionHandler());
 
 	}
 
