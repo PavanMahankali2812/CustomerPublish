@@ -89,7 +89,12 @@ public class GlobalExceptionHandler implements AuthenticationEntryPoint {
 	public void commence(HttpServletRequest request, HttpServletResponse response,
 			AuthenticationException authException) throws IOException, ServletException {
 
-		response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Authentication Failed");
+		ErrorResponse errorResponse = new ErrorResponse();
+		errorResponse.setStatus(PublisherConstants.ERROR.getValue());
+		errorResponse.setMessage(authException.getLocalizedMessage());
+		errorResponse.setErrorType(authException.getClass().getSimpleName());
+		logger.error("ErrorResponse : {}", errorResponse);
+		response.sendError(HttpServletResponse.SC_UNAUTHORIZED, authException.getMessage());
 	}
 
 }
