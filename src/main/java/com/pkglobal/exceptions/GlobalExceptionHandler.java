@@ -1,8 +1,6 @@
 package com.pkglobal.exceptions;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 import javax.servlet.ServletException;
@@ -92,13 +90,13 @@ public class GlobalExceptionHandler implements AuthenticationEntryPoint {
 	public void commence(HttpServletRequest request, HttpServletResponse response,
 			AuthenticationException authException) throws IOException, ServletException {
 		response.setStatus(HttpServletResponse.SC_FORBIDDEN);
-		final Map<String, Object> body = new HashMap<>();
-		body.put("Status", PublisherConstants.ERROR.getValue());
-		body.put("Message", authException.getLocalizedMessage());
-		body.put("ErrorType", authException.getClass().getSimpleName());
+		ErrorResponse errorResponse = new ErrorResponse();
+		errorResponse.setStatus(PublisherConstants.ERROR.getValue());
+		errorResponse.setMessage(authException.getLocalizedMessage());
+		errorResponse.setErrorType(authException.getClass().getSimpleName());
+		logger.error("ErrorResponse : {}", errorResponse);
 		final ObjectMapper mapper = new ObjectMapper();
-		logger.error("ErrorResponse : {}", body);
-		mapper.writeValue(response.getOutputStream(), body);
+		mapper.writeValue(response.getOutputStream(), errorResponse);
 	}
 
 }
