@@ -41,7 +41,7 @@ public class DefaultCustomerPublishService implements CustomerPublishService {
 			logger.info("Start to Publish message and message is {}", messageRequest);
 			MessageProducerRequest messageProducerRequest = messageRequestConverter.convert(messageRequest);
 			kafkaTemplate.send(kafkaTopic, messageProducerRequest);
-			logger.info("End to Publish message and message is {}", messageRequest);
+			logger.info("End to Publish message and message is {}", messageProducerRequest);
 		} catch (Exception ex) {
 			throw new ApplicationRuntimeException(String.valueOf(HttpStatus.INTERNAL_SERVER_ERROR.value()),
 					ex.getMessage());
