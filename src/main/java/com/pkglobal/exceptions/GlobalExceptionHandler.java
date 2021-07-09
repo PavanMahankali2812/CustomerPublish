@@ -93,8 +93,7 @@ public class GlobalExceptionHandler implements AuthenticationEntryPoint {
 		errorResponse.setMessage(authException.getLocalizedMessage());
 		errorResponse.setErrorType(authException.getClass().getSimpleName());
 		logger.error("ErrorResponse : {}", errorResponse);
-		response.sendError(HttpServletResponse.SC_UNAUTHORIZED,
-				"Please enter valid details" + authException.getMessage());
+		unauthorizedHandler(authException, request);
 
 	}
 
