@@ -6,7 +6,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.Message;
+import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -40,12 +43,13 @@ public class CustomerPublishController {
 		headers.add("Activity-Id", activityId);
 
 		MessageRequest maskMessageRequest = messageRequestMaskConverter.maskCustomerRequest(messageRequest);
-		logger.info("messageRequest : {} ", maskMessageRequest);
+		Message<MessageRequest> message = MessageBuilder.withPayload(maskMessageRequest)
+				.setHeader("Transaction-Id", transactionId).setHeader("Activity-Id", activityId).build();
+		logger.info("messageRequest : {} ", message);
 		long startTime = System.currentTimeMillis();
-		MessageResponse response = customerPublishService.publishMessage(maskMessageRequest);
+		MessageResponse response = customerPublishService.publishMessage((MessageRequest) message);
 		logger.info("Publisher Service required time:{}", System.currentTimeMillis() - startTime);
 		logger.info("MessageResponse:{}", response);
-		return ResponseEntity.ok().headers(headers).body(response);
-
+		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 }
