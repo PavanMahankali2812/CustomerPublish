@@ -5,7 +5,7 @@ import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -35,12 +35,17 @@ public class CustomerPublishController {
 			@RequestHeader("Transaction-Id") String transactionId, @RequestHeader("Activity-Id") String activityId,
 			@RequestHeader("Authorization") String authorization) {
 
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("Transaction-Id", transactionId);
+		headers.add("Activity-Id", activityId);
+
 		MessageRequest maskMessageRequest = messageRequestMaskConverter.maskCustomerRequest(messageRequest);
 		logger.info("messageRequest : {} ", maskMessageRequest);
 		long startTime = System.currentTimeMillis();
 		MessageResponse response = customerPublishService.publishMessage(maskMessageRequest);
 		logger.info("Publisher Service required time:{}", System.currentTimeMillis() - startTime);
 		logger.info("MessageResponse:{}", response);
-		return new ResponseEntity<>(response, HttpStatus.OK);
+		return ResponseEntity.ok().headers(headers).body(response);
+
 	}
 }

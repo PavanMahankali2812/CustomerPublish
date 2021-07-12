@@ -299,7 +299,7 @@ class CustomerPublishControllerTest {
 	private HttpHeaders buildHttpHeaders() {
 		HttpHeaders headers = new HttpHeaders();
 		headers.set("Content-Type", "application/json");
-		headers.set("Authorization", "Bearer eyJraWQiOiIzd2V5blJZX0VQSmxVdElna2h1ckNmUnVKbDJidGJCdkFq");
+		headers.set("Authorization", "Bearer da87cff0-eb4d-4ff8-84e4-362f44c64ca4");
 		headers.set("Activity-Id", "Activity-Id");
 		headers.set("Transaction-Id", "Transaction-Id");
 		return headers;
