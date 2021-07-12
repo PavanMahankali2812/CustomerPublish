@@ -1,5 +1,6 @@
 package com.pkglobal.service;
 
+import org.apache.kafka.common.errors.TimeoutException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,7 +43,7 @@ public class DefaultCustomerPublishService implements CustomerPublishService {
 			MessageProducerRequest messageProducerRequest = messageRequestConverter.convert(messageRequest);
 			kafkaTemplate.send(kafkaTopic, messageProducerRequest);
 			logger.info("End to Publish message and message is {}", messageProducerRequest);
-		} catch (Exception ex) {
+		} catch (TimeoutException ex) {
 			throw new ApplicationRuntimeException(String.valueOf(HttpStatus.INTERNAL_SERVER_ERROR.value()),
 					ex.getMessage());
 		}
