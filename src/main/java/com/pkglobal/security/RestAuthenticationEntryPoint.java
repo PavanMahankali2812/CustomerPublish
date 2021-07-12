@@ -28,10 +28,10 @@ public class RestAuthenticationEntryPoint implements AuthenticationEntryPoint {
 		ErrorResponse errorResponse = new ErrorResponse();
 		errorResponse.setStatus(PublisherConstants.ERROR.getValue());
 		errorResponse.setMessage(authException.getLocalizedMessage());
-		errorResponse.setErrorType("");
+		errorResponse.setErrorType("Unauthorized");
 		logger.error("ErrorResponse : {}", errorResponse);
 		final ObjectMapper mapper = new ObjectMapper();
-		mapper.writeValue(response.getOutputStream(), mapper.writeValueAsString(errorResponse));
+		mapper.writeValue(response.getWriter(), mapper.writeValueAsString(errorResponse));
 
 	}
 }
