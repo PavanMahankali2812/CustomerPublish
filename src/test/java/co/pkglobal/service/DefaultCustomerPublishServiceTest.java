@@ -13,7 +13,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.kafka.core.KafkaTemplate;
 
 import com.pkglobal.converter.DefaultMessageRequestConverter;
-import com.pkglobal.converter.DefaultMessageRequestMaskConverter;
 import com.pkglobal.model.Address;
 import com.pkglobal.model.CustomerStatusEnum;
 import com.pkglobal.model.MessageRequest;
@@ -31,9 +30,6 @@ class DefaultCustomerPublishServiceTest {
 
 	@Mock
 	private DefaultMessageRequestConverter messageRequestConverter;
-
-	@Mock
-	private DefaultMessageRequestMaskConverter messageRequestMaskConverter;
 
 	@BeforeEach
 	public void setUp() {

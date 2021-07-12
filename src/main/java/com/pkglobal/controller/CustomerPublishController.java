@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.pkglobal.converter.DefaultMessageRequestMaskConverter;
+import com.pkglobal.converter.DefaultMessageRequestConverter;
 import com.pkglobal.model.MessageRequest;
 import com.pkglobal.model.MessageResponse;
 import com.pkglobal.service.CustomerPublishService;
@@ -28,17 +28,17 @@ public class CustomerPublishController {
 	private CustomerPublishService customerPublishService;
 
 	@Autowired
-	private DefaultMessageRequestMaskConverter messageRequestMaskConverter;
+	private DefaultMessageRequestConverter messageRequestMaskConverter;
 
 	@PostMapping(path = "/publish-message")
 	public ResponseEntity<MessageResponse> publishService(@Valid @RequestBody MessageRequest messageRequest,
 			@RequestHeader("Transaction-Id") String transactionId, @RequestHeader("Activity-Id") String activityId,
 			@RequestHeader("Authorization") String authorization) {
 
-		MessageRequest maskMessageRequest = messageRequestMaskConverter.convert(messageRequest);
+		MessageRequest maskMessageRequest = messageRequestMaskConverter.maskCustomerRequest(messageRequest);
 		logger.info("messageRequest : {} ", maskMessageRequest);
 		long startTime = System.currentTimeMillis();
-		MessageResponse response = customerPublishService.publishMessage(messageRequest);
+		MessageResponse response = customerPublishService.publishMessage(maskMessageRequest);
 		logger.info("Publisher Service required time:{}", System.currentTimeMillis() - startTime);
 		logger.info("MessageResponse:{}", response);
 		return new ResponseEntity<>(response, HttpStatus.OK);

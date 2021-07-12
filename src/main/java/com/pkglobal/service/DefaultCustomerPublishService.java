@@ -3,16 +3,12 @@ package com.pkglobal.service;
 import org.apache.kafka.common.errors.TimeoutException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
-import com.pkglobal.converter.DefaultMessageRequestConverter;
-import com.pkglobal.converter.DefaultMessageRequestMaskConverter;
 import com.pkglobal.exceptions.ApplicationRuntimeException;
-import com.pkglobal.model.MessageProducerRequest;
 import com.pkglobal.model.MessageRequest;
 import com.pkglobal.model.MessageResponse;
 
@@ -25,24 +21,17 @@ public class DefaultCustomerPublishService implements CustomerPublishService {
 
 	@Value("${cloudkarafka.topic}")
 	private String kafkaTopic;
-	@Autowired
-	private DefaultMessageRequestConverter messageRequestConverter;
-
-	@Autowired
-	private DefaultMessageRequestMaskConverter messageRequestMaskConverter;
 
 	public DefaultCustomerPublishService(KafkaTemplate<String, Object> kafkaTemplate) {
 		this.kafkaTemplate = kafkaTemplate;
 	}
 
 	@Override
-	public MessageResponse publishMessage(MessageRequest message) {
+	public MessageResponse publishMessage(MessageRequest maskMessageRequest) {
 		try {
-			MessageRequest messageRequest = messageRequestMaskConverter.convert(message);
-			logger.info("Start to Publish message and message is {}", messageRequest);
-			MessageProducerRequest messageProducerRequest = messageRequestConverter.convert(messageRequest);
-			kafkaTemplate.send(kafkaTopic, messageProducerRequest);
-			logger.info("End to Publish message and message is {}", messageProducerRequest);
+			logger.info("Start to Publish message and message is {}", maskMessageRequest);
+			kafkaTemplate.send(kafkaTopic, maskMessageRequest);
+			logger.info("End to Publish message and message is {}", maskMessageRequest);
 		} catch (TimeoutException ex) {
 			throw new ApplicationRuntimeException(String.valueOf(HttpStatus.INTERNAL_SERVER_ERROR.value()),
 					ex.getMessage());
