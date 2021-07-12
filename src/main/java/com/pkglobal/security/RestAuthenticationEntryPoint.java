@@ -31,7 +31,7 @@ public class RestAuthenticationEntryPoint implements AuthenticationEntryPoint {
 		errorResponse.setErrorType("Unauthorized");
 		logger.error("ErrorResponse : {}", errorResponse);
 		final ObjectMapper mapper = new ObjectMapper();
-		mapper.writeValue(response.getWriter(), mapper.writeValueAsString(errorResponse));
+		mapper.writeValueAsString(errorResponse);
 
 	}
 }
