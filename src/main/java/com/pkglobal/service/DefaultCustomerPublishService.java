@@ -6,6 +6,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.messaging.Message;
+import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.stereotype.Service;
 
 import com.pkglobal.exceptions.ApplicationRuntimeException;
@@ -29,9 +31,12 @@ public class DefaultCustomerPublishService implements CustomerPublishService {
 	@Override
 	public MessageResponse publishMessage(MessageRequest maskMessageRequest) {
 		try {
-			logger.info("Start to Publish message and message is {}", maskMessageRequest);
-			kafkaTemplate.send(kafkaTopic, maskMessageRequest);
-			logger.info("End to Publish message and message is {}", maskMessageRequest);
+			Message<MessageRequest> message = MessageBuilder.withPayload(maskMessageRequest)
+					.setHeader("Transaction-Id", "transactionId").setHeader("Activity-Id", "activityId").build();
+			logger.info("messageRequest : {} ", message);
+			logger.info("Start to Publish message and message is {}", message);
+			kafkaTemplate.send(kafkaTopic, message);
+			logger.info("End to Publish message and message is {}", message);
 		} catch (TimeoutException ex) {
 			throw new ApplicationRuntimeException(String.valueOf(HttpStatus.INTERNAL_SERVER_ERROR.value()),
 					ex.getMessage());

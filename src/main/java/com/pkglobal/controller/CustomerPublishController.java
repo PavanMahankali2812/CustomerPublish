@@ -34,8 +34,8 @@ public class CustomerPublishController {
 	public ResponseEntity<MessageResponse> publishService(@Valid @RequestBody MessageRequest messageRequest,
 			@RequestHeader("Transaction-Id") String transactionId, @RequestHeader("Activity-Id") String activityId,
 			@RequestHeader("Authorization") String authorization) {
+
 		MessageRequest maskMessageRequest = messageRequestMaskConverter.maskCustomerRequest(messageRequest);
-		logger.info("messageRequest : {} ", maskMessageRequest);
 		long startTime = System.currentTimeMillis();
 		MessageResponse response = customerPublishService.publishMessage(maskMessageRequest);
 		logger.info("Publisher Service required time:{}", System.currentTimeMillis() - startTime);
