@@ -20,7 +20,7 @@ import com.pkglobal.model.ErrorResponse;
 
 @Component
 public class RestExceptionTranslationFilter extends ExceptionTranslationFilter {
-	private static final Logger logger = LoggerFactory.getLogger(RestAuthenticationEntryPoint.class);
+	private static final Logger logger = LoggerFactory.getLogger(RestExceptionTranslationFilter.class);
 
 	public RestExceptionTranslationFilter(AuthenticationEntryPoint authenticationEntryPoint) {
 		super(authenticationEntryPoint);
