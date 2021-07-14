@@ -6,7 +6,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.codehaus.jackson.map.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,9 +14,6 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerExceptionResolver;
-
-import com.pkglobal.constant.PublisherConstants;
-import com.pkglobal.model.ErrorResponse;
 
 @Component
 public class RestAuthenticationEntryPoint implements AuthenticationEntryPoint {
@@ -40,9 +36,8 @@ public class RestAuthenticationEntryPoint implements AuthenticationEntryPoint {
 		 * = new ObjectMapper(); mapper.writeValue(response.getOutputStream(),
 		 * errorResponse);
 		 */
-		
-		 resolver.resolveException(request, response, null, authException);
-    }		       
-
+		logger.error("ErrorResponse : {}", authException);
+		resolver.resolveException(request, response, null, authException);
 	}
+
 }
