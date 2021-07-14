@@ -6,7 +6,7 @@ import org.springframework.http.HttpStatus;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.pkglobal.exceptions.ApplicationRuntimeException;
+import com.pkglobal.exceptions.ProducerServiceException;
 
 public class ObjectMapperUtil {
 
@@ -21,7 +21,7 @@ public class ObjectMapperUtil {
 			ObjectMapper objectMapper = new ObjectMapper();
 			return objectMapper.writeValueAsString(object);
 		} catch (JsonProcessingException ex) {
-			throw new ApplicationRuntimeException(String.valueOf(HttpStatus.INTERNAL_SERVER_ERROR.value()),
+			throw new ProducerServiceException(String.valueOf(HttpStatus.INTERNAL_SERVER_ERROR.value()),
 					ex.getMessage());
 		}
 	}

@@ -48,7 +48,7 @@ public class GlobalExceptionHandler {
 		return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
 	}
 
-	@ExceptionHandler({ ResourceAccessException.class, ApplicationRuntimeException.class, Exception.class })
+	@ExceptionHandler({ ResourceAccessException.class, ProducerServiceException.class, Exception.class })
 	public final ResponseEntity<ErrorResponse> handleException(Exception ex, HttpServletRequest request) {
 		ErrorResponse errorResponse = new ErrorResponse();
 		errorResponse.setStatus(PublisherConstants.ERROR.getValue());
