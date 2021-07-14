@@ -12,8 +12,6 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
 	@Override
 	public void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests().antMatchers("/oauth/token", "/oauth/authorize**").permitAll().anyRequest()
-				.authenticated();
-		// .and().exceptionHandling().authenticationEntryPoint(new
-		// RestAuthenticationEntryPoint()
+				.authenticated().and().exceptionHandling().authenticationEntryPoint(new RestAuthenticationEntryPoint());
 	}
 }
