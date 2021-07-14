@@ -10,7 +10,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.security.authentication.InsufficientAuthenticationException;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.oauth2.common.exceptions.InvalidTokenException;
 import org.springframework.security.oauth2.common.exceptions.UnauthorizedClientException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -62,7 +64,7 @@ public class GlobalExceptionHandler {
 	}
 
 	@ExceptionHandler({ UnauthorizedClientException.class, InvalidCredentialsException.class,
-			AuthenticationException.class })
+			AuthenticationException.class, InsufficientAuthenticationException.class, InvalidTokenException.class })
 	public ResponseEntity<ErrorResponse> unauthorizedHandler(Exception ex, HttpServletRequest request) {
 		ErrorResponse errorResponse = new ErrorResponse();
 		errorResponse.setStatus(PublisherConstants.ERROR.getValue());
