@@ -17,7 +17,7 @@ import org.springframework.web.servlet.HandlerExceptionResolver;
 
 @Component
 public class AuthFilter extends OncePerRequestFilter {
-	private static final Logger logger = LoggerFactory.getLogger(RestAuthenticationEntryPoint.class);
+	private static final Logger logger = LoggerFactory.getLogger(AuthFilter.class);
 	@Autowired
 	@Qualifier("handlerExceptionResolver")
 	private HandlerExceptionResolver resolver;
