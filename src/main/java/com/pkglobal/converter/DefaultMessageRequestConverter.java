@@ -14,6 +14,7 @@ public class DefaultMessageRequestConverter implements ProducerConverter<Message
 	@Override
 	public MessageProducerRequest convert(MessageRequest messageRequest) {
 		return buildMessageProducerRequest(messageRequest);
+
 	}
 
 	private MessageProducerRequest buildMessageProducerRequest(MessageRequest messageRequest) {
@@ -28,6 +29,7 @@ public class DefaultMessageRequestConverter implements ProducerConverter<Message
 		messageProducerRequest.setFirstName(messageRequest.getFirstName());
 		messageProducerRequest.setLastName(messageRequest.getLastName());
 		messageProducerRequest.setMobileNumber(messageRequest.getMobileNumber());
+		maskCustomerRequest(messageProducerRequest);
 		return messageProducerRequest;
 	}
 
@@ -40,17 +42,17 @@ public class DefaultMessageRequestConverter implements ProducerConverter<Message
 		return addressProducerRequest;
 	}
 
-	public MessageRequest maskCustomerRequest(MessageRequest messageRequest) {
-		messageRequest.setCustomerNumber(messageRequest.getCustomerNumber().replaceAll(
+	public MessageProducerRequest maskCustomerRequest(MessageProducerRequest messageProducerRequest) {
+		messageProducerRequest.setCustomerNumber(messageProducerRequest.getCustomerNumber().replaceAll(
 				(PublisherRegexConstants.CUSTOMER_NUMBER_REGEX_EXPRESSION.getRegexExpression()),
 				PublisherRegexConstants.MASK_CONSTANTS.getRegexExpression()));
-		messageRequest.setBirthDate(messageRequest.getBirthDate().replaceAll(
+		messageProducerRequest.setBirthDate(messageProducerRequest.getBirthDate().replaceAll(
 				(PublisherRegexConstants.BIRTH_DATE_REGEX_EXPRESSION.getRegexExpression()),
 				PublisherRegexConstants.MASK_CONSTANTS.getRegexExpression()));
-		messageRequest.setEmail(messageRequest.getEmail().replaceAll(
+		messageProducerRequest.setEmail(messageProducerRequest.getEmail().replaceAll(
 				(PublisherRegexConstants.EMAIL_ID_REGEX_EXPRESSION.getRegexExpression()),
 				PublisherRegexConstants.MASK_CONSTANTS.getRegexExpression()));
-		return messageRequest;
+		return messageProducerRequest;
 
 	}
 }
