@@ -4,11 +4,14 @@ import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.http.auth.InvalidCredentialsException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.oauth2.common.exceptions.UnauthorizedClientException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingRequestHeaderException;
@@ -56,6 +59,17 @@ public class GlobalExceptionHandler {
 		errorResponse.setErrorType(ex.getClass().getName());
 		logger.error("ErrorResponse :{}", errorResponse);
 		return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
+	}
+
+	@ExceptionHandler({ UnauthorizedClientException.class, InvalidCredentialsException.class,
+			AuthenticationException.class })
+	public ResponseEntity<ErrorResponse> unauthorizedHandler(Exception ex, HttpServletRequest request) {
+		ErrorResponse errorResponse = new ErrorResponse();
+		errorResponse.setStatus(PublisherConstants.ERROR.getValue());
+		errorResponse.setMessage(ex.getMessage());
+		errorResponse.setErrorType(ex.getClass().getName());
+		logger.error("ErrorResponse :{}", errorResponse);
+		return new ResponseEntity<>(errorResponse, HttpStatus.UNAUTHORIZED);
 	}
 
 	@ExceptionHandler({ HttpMessageNotReadableException.class, MissingRequestHeaderException.class,
