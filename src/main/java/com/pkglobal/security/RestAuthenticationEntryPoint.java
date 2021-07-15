@@ -36,13 +36,14 @@ public class RestAuthenticationEntryPoint implements AuthenticationEntryPoint {
 
 		if (authException instanceof InsufficientAuthenticationException) {
 
-			if (authException.getCause() instanceof InvalidTokenException) {
-				response.getOutputStream().println("{ " + "\"message\": \"Token has expired\","
-						+ "\"type\": \"Unauthorized\"," + "\"status\": 401" + "}");
-			}
 			response.getOutputStream().println("{ " + "\"message\": \"Token has expired\","
 					+ "\"type\": \"Unauthorized\"," + "\"status\": 401" + "}");
 		}
+		if (authException.getCause() instanceof InvalidTokenException) {
+			response.getOutputStream().println("{ " + "\"message\": \"Token has expired\","
+					+ "\"type\": \"Unauthorized\"," + "\"status\": 401" + "}");
+		}
+
 		if (authException instanceof AuthenticationCredentialsNotFoundException) {
 
 			response.getOutputStream().println("{ " + "\"message\": \"Missing Authorization Header\","
