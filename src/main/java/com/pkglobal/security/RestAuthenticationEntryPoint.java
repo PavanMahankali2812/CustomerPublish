@@ -15,6 +15,8 @@ import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerExceptionResolver;
 
+import com.pkglobal.exceptions.GlobalExceptionHandler;
+
 @Component
 public class RestAuthenticationEntryPoint implements AuthenticationEntryPoint {
 
@@ -27,7 +29,7 @@ public class RestAuthenticationEntryPoint implements AuthenticationEntryPoint {
 	public void commence(HttpServletRequest request, HttpServletResponse response,
 			AuthenticationException authException) throws IOException, ServletException {
 		logger.info("---------------logger");
-		resolver.resolveException(request, response, null, authException);
+		resolver.resolveException(request, response, GlobalExceptionHandler.class, authException);
 
 	}
 }

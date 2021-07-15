@@ -65,7 +65,7 @@ public class GlobalExceptionHandler {
 
 	@ExceptionHandler({ UnauthorizedClientException.class, InvalidCredentialsException.class,
 			AuthenticationException.class, InsufficientAuthenticationException.class, InvalidTokenException.class })
-	public ResponseEntity<ErrorResponse> unauthorizedHandler(Exception ex, HttpServletRequest request) {
+	public ResponseEntity<ErrorResponse> handleAuthenticationException(Exception ex, HttpServletRequest request) {
 		ErrorResponse errorResponse = new ErrorResponse();
 		errorResponse.setStatus(PublisherConstants.ERROR.getValue());
 		errorResponse.setMessage(ex.getMessage());
