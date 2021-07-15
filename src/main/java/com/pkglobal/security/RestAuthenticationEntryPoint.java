@@ -40,6 +40,8 @@ public class RestAuthenticationEntryPoint implements AuthenticationEntryPoint {
 				response.getOutputStream().println("{ " + "\"message\": \"Token has expired\","
 						+ "\"type\": \"Unauthorized\"," + "\"status\": 401" + "}");
 			}
+			response.getOutputStream().println("{ " + "\"message\": \"Token has expired\","
+					+ "\"type\": \"Unauthorized\"," + "\"status\": 401" + "}");
 		}
 		if (authException instanceof AuthenticationCredentialsNotFoundException) {
 
